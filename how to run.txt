@@ -1,0 +1,55 @@
+SQL LEARNING WEBSITE
+
+====================================
+
+GitHub Repository: https://github.com/Krishna67890/SQL-Learning-Website-Python-Development
+
+This project is a full-stack application with a React frontend and Python Flask backend.
+Follow these steps to run the application:
+
+PREREQUISITES:
+- Python 3.7 or higher
+- Node.js and npm
+- Git (optional, for cloning)
+
+BACKEND SETUP (Python Flask):
+1. Open a command prompt/terminal
+2. Navigate to the backend directory:
+   cd d:\KRISHNA\VS code\python\MySql Website\react-sql-website\backend
+3. Install Python dependencies:
+   pip install -r requirements.txt
+4. Start the backend server:
+   python app.py
+5. The backend will run on http://localhost:5001
+
+FRONTEND SETUP (React):
+1. Open another command prompt/terminal
+2. Navigate to the frontend directory:
+   cd d:\KRISHNA\VS code\python\MySql Website\react-sql-website\frontend
+3. Install Node.js dependencies:
+   npm install
+4. Start the frontend development server:
+   npm start
+5. The frontend will run on http://localhost:3000
+
+RUNNING THE APPLICATION:
+1. Make sure both backend and frontend servers are running
+2. Open your browser and go to http://localhost:3000
+3. The SQL learning website will be accessible with all features
+
+ALTERNATIVE METHOD (Using the batch file):
+1. Navigate to the main project directory: d:\KRISHNA\VS code\python\MySql Website\react-sql-website
+2. Run the batch file: run_both.bat
+3. This will start both the backend and frontend automatically
+4. Open your browser and go to http://localhost:3000
+
+TROUBLESHOOTING:
+- If the backend port 5001 is busy, change it in app.py
+- If the frontend port 3000 is busy, it will ask to use another port
+- Make sure you have installed all dependencies from requirements.txt and package.json
+- If GSAP animations are not working, make sure to install it: npm install gsap
+
+GITHUB REPOSITORY:
+- Clone the repository: git clone https://github.com/Krishna67890/SQL-Learning-Website-Python-Development
+- Visit the project page for more information and updates
+- Report issues or contribute to the project through the GitHub repository

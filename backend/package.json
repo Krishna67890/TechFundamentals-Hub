@@ -1,0 +1,13 @@
+{
+  "name": "sql-learning-backend",
+  "version": "1.0.0",
+  "description": "Backend API for SQL Learning Website",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py",
+    "dev": "python app.py"
+  },
+  "keywords": ["sql", "learning", "api", "flask"],
+  "author": "SQL Learning Center",
+  "license": "MIT"
+}
