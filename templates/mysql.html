@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% block title %}MySQL - Learn MySQL Database{% endblock %}
+
+{% block content %}
+<div class="page-header text-center">
+    <h1>MySQL Database</h1>
+    <p class="lead">Learn MySQL - the world's most popular open-source database</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Introduction to MySQL</h2>
+                <p class="card-text">
+                    MySQL is an open-source relational database management system (RDBMS) based on Structured Query Language (SQL).
+                    It is widely used for web applications and is one of the most popular database systems in the world.
+                </p>
+                
+                <div class="info">
+                    <p><strong>Key Features of MySQL:</strong></p>
+                    <ul>
+                        <li>Open Source - Free to use and modify</li>
+                        <li>High Performance - Optimized for speed and reliability</li>
+                        <li>Scalability - Handles large databases efficiently</li>
+                        <li>Cross-Platform - Runs on various operating systems</li>
+                        <li>Replication Support - Enables high availability</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">MySQL Installation and Setup</h3>
+                
+                <h4>Installation Commands</h4>
+                <div class="sql-command">
+                    <pre><code># On Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install mysql-server
+
+# On CentOS/RHEL
+sudo yum install mysql-server
+
+# On Windows
+# Download from official MySQL website and run installer</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Starting MySQL Service</h4>
+                <div class="sql-command">
+                    <pre><code># Start MySQL service
+sudo systemctl start mysql
+
+# Enable MySQL service to start on boot
+sudo systemctl enable mysql
+
+# Connect to MySQL
+mysql -u root -p</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">MySQL Specific Commands</h3>
+                
+                <h4>Database Operations</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Database
+CREATE DATABASE database_name;
+
+-- Use Database
+USE database_name;
+
+-- Show Databases
+SHOW DATABASES;
+
+-- Drop Database
+DROP DATABASE database_name;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Table Operations</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Table
+CREATE TABLE table_name (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Show Tables
+SHOW TABLES;
+
+-- Describe Table
+DESCRIBE table_name;
+
+-- Drop Table
+DROP TABLE table_name;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">MySQL Data Types</h4>
+                <div class="sql-command">
+                    <pre><code>-- Numeric Types
+INT, TINYINT, SMALLINT, MEDIUMINT, BIGINT
+DECIMAL(M,D), FLOAT, DOUBLE
+
+-- Date and Time Types
+DATE, TIME, DATETIME, TIMESTAMP, YEAR
+
+-- String Types
+CHAR(n), VARCHAR(n), TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT
+BINARY, VARBINARY, BLOB, MEDIUMBLOB, LONGBLOB</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">MySQL Functions and Features</h3>
+                
+                <h4>String Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Common String Functions
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM users;
+SELECT UPPER(name) FROM products;
+SELECT LOWER(name) FROM products;
+SELECT LENGTH(name) FROM products;
+SELECT SUBSTRING(name, 1, 5) FROM products;
+SELECT REPLACE(name, 'old', 'new') FROM products;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Date and Time Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Common Date Functions
+SELECT NOW(); -- Current date and time
+SELECT CURDATE(); -- Current date
+SELECT CURTIME(); -- Current time
+SELECT DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'); -- Formatted date
+SELECT DATEDIFF('2023-12-31', '2023-01-01'); -- Difference in days
+SELECT DATE_ADD(NOW(), INTERVAL 1 MONTH); -- Add 1 month</code></pre>
+                </div>
+                
+                <h4 class="mt-3">MySQL Specific Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- MySQL Specific Functions
+SELECT UUID(); -- Generate unique identifier
+SELECT IF(condition, value_if_true, value_if_false);
+SELECT CASE WHEN condition THEN result1 ELSE result2 END;
+SELECT COALESCE(value1, value2, value3); -- Returns first non-null value
+SELECT IFNULL(value, replacement); -- MySQL specific null check</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">MySQL Indexes and Performance</h3>
+                
+                <h4>Creating Indexes</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Index
+CREATE INDEX idx_lastname ON users(last_name);
+
+-- Create Unique Index
+CREATE UNIQUE INDEX idx_email ON users(email);
+
+-- Create Composite Index
+CREATE INDEX idx_name_age ON users(first_name, last_name, age);
+
+-- Drop Index
+DROP INDEX idx_lastname ON users;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">MySQL Performance Optimization</h4>
+                <div class="sql-command">
+                    <pre><code>-- Analyze Query Performance
+EXPLAIN SELECT * FROM users WHERE email = 'john@example.com';
+
+-- Show Process List
+SHOW PROCESSLIST;
+
+-- View Indexes
+SHOW INDEX FROM table_name;
+
+-- Optimize Table
+OPTIMIZE TABLE table_name;</code></pre>
+                </div>
+                
+                <div class="info">
+                    <p><strong>Performance Tips:</strong></p>
+                    <ul>
+                        <li>Use indexes wisely - they speed up SELECT but slow down INSERT/UPDATE/DELETE</li>
+                        <li>Use LIMIT to restrict result sets</li>
+                        <li>Avoid SELECT * - specify only needed columns</li>
+                        <li>Use EXPLAIN to analyze query performance</li>
+                        <li>Consider partitioning for large tables</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">MySQL Stored Procedures and Functions</h3>
+                
+                <h4>Creating Stored Procedures</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create a stored procedure
+DELIMITER $$
+CREATE PROCEDURE GetUsersByCity(IN city_name VARCHAR(255))
+BEGIN
+    SELECT * FROM users WHERE city = city_name;
+END$$
+DELIMITER ;
+
+-- Call the procedure
+CALL GetUsersByCity('New York');</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Creating Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create a function
+DELIMITER $$
+CREATE FUNCTION CalculateAge(birth_date DATE)
+RETURNS INT
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+    DECLARE age INT;
+    SET age = TIMESTAMPDIFF(YEAR, birth_date, CURDATE());
+    RETURN age;
+END$$
+DELIMITER ;
+
+-- Use the function
+SELECT name, CalculateAge(birth_date) AS age FROM users;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

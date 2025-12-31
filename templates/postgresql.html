@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+
+{% block title %}PostgreSQL - Learn PostgreSQL Database{% endblock %}
+
+{% block content %}
+<div class="page-header text-center">
+    <h1>PostgreSQL Database</h1>
+    <p class="lead">Learn PostgreSQL - the most advanced open-source database</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Introduction to PostgreSQL</h2>
+                <p class="card-text">
+                    PostgreSQL is a powerful, open-source object-relational database system known for its
+                    reliability, feature robustness, and performance. It supports a large part of the SQL standard
+                    and offers many modern features.
+                </p>
+                
+                <div class="info">
+                    <p><strong>Key Features of PostgreSQL:</strong></p>
+                    <ul>
+                        <li>ACID compliance for reliable transactions</li>
+                        <li>Extensive SQL standard compliance</li>
+                        <li>Advanced data types (JSON, arrays, custom types)</li>
+                        <li>Geospatial data support through PostGIS</li>
+                        <li>Extensibility with custom functions and operators</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">PostgreSQL Installation and Setup</h3>
+                
+                <h4>Installation Commands</h4>
+                <div class="sql-command">
+                    <pre><code># On Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+
+# On CentOS/RHEL
+sudo yum install postgresql-server postgresql-contrib
+sudo postgresql-setup initdb
+
+# On Windows
+# Download from official PostgreSQL website and run installer</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Starting PostgreSQL Service</h4>
+                <div class="sql-command">
+                    <pre><code># Start PostgreSQL service
+sudo systemctl start postgresql
+
+# Enable PostgreSQL service to start on boot
+sudo systemctl enable postgresql
+
+# Connect to PostgreSQL
+sudo -u postgres psql
+
+# Connect to specific database
+psql -U username -d database_name -h hostname</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">PostgreSQL Specific Commands</h3>
+                
+                <h4>Database Operations</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Database
+CREATE DATABASE database_name;
+
+-- Connect to Database (in psql)
+\c database_name
+
+-- Show Databases
+\l
+
+-- Drop Database
+DROP DATABASE database_name;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Table Operations</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Table
+CREATE TABLE table_name (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Show Tables
+\dt
+
+-- Describe Table
+\d table_name;
+
+-- Drop Table
+DROP TABLE table_name;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">PostgreSQL Data Types</h4>
+                <div class="sql-command">
+                    <pre><code>-- Numeric Types
+SMALLINT, INTEGER, BIGINT, DECIMAL, NUMERIC, REAL, DOUBLE PRECISION
+
+-- Date and Time Types
+DATE, TIME, TIMESTAMP, TIMESTAMPTZ, INTERVAL
+
+-- String Types
+CHAR(n), VARCHAR(n), TEXT
+
+-- Special Types
+BOOLEAN, UUID, JSON, JSONB, ARRAY, HSTORE, GEOMETRY (with PostGIS)
+
+-- Network Address Types
+INET, CIDR, MACADDR</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">PostgreSQL Functions and Features</h3>
+                
+                <h4>String Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Common String Functions
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM users;
+SELECT UPPER(name) FROM products;
+SELECT LOWER(name) FROM products;
+SELECT LENGTH(name) FROM products;
+SELECT SUBSTRING(name FROM 1 FOR 5) FROM products; -- Note: different syntax
+SELECT REPLACE(name, 'old', 'new') FROM products;
+SELECT REVERSE(name) FROM products;
+SELECT INITCAP(name) FROM products; -- Capitalize first letter of each word</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Date and Time Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Common Date Functions
+SELECT NOW(); -- Current date and time
+SELECT CURRENT_DATE; -- Current date
+SELECT CURRENT_TIME; -- Current time
+SELECT DATE_TRUNC('month', NOW()); -- Truncate to month
+SELECT AGE(timestamp1, timestamp2); -- Calculate age/difference
+SELECT EXTRACT(YEAR FROM date_column) FROM table_name; -- Extract part of date
+SELECT TO_CHAR(date_column, 'YYYY-MM-DD') FROM table_name; -- Format date</code></pre>
+                </div>
+                
+                <h4 class="mt-3">PostgreSQL Specific Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- PostgreSQL Specific Functions
+SELECT GEN_RANDOM_UUID(); -- Generate UUID
+SELECT CASE WHEN condition THEN result1 ELSE result2 END;
+SELECT COALESCE(value1, value2, value3); -- Returns first non-null value
+SELECT NULLIF(value1, value2); -- Returns NULL if values are equal
+SELECT GREATEST(value1, value2, value3); -- Returns greatest value
+SELECT LEAST(value1, value2, value3); -- Returns smallest value
+SELECT STRING_AGG(column, ', ') FROM table_name; -- Aggregate strings</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">PostgreSQL Advanced Features</h3>
+                
+                <h4>JSON Support</h4>
+                <div class="sql-command">
+                    <pre><code>-- JSON Operations
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    properties JSONB
+);
+
+-- Query JSON data
+SELECT * FROM products WHERE properties->>'category' = 'electronics';
+SELECT properties->'price' FROM products;
+SELECT jsonb_set(properties, '{color}', '"red"') FROM products;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Array Support</h4>
+                <div class="sql-command">
+                    <pre><code>-- Array Operations
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    tags TEXT[]
+);
+
+-- Array functions
+SELECT ARRAY['tag1', 'tag2', 'tag3'] AS tags;
+SELECT * FROM users WHERE 'important' = ANY(tags);
+SELECT array_length(tags, 1) FROM users;
+SELECT array_append(tags, 'new_tag') FROM users;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Window Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Window Functions
+SELECT 
+    name,
+    salary,
+    ROW_NUMBER() OVER (ORDER BY salary DESC) AS rank,
+    RANK() OVER (ORDER BY salary DESC) AS salary_rank,
+    LAG(salary) OVER (ORDER BY salary) AS prev_salary,
+    LEAD(salary) OVER (ORDER BY salary) AS next_salary
+FROM employees;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">PostgreSQL Indexes and Performance</h3>
+                
+                <h4>Creating Indexes</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Index
+CREATE INDEX idx_lastname ON users(last_name);
+
+-- Create Unique Index
+CREATE UNIQUE INDEX idx_email ON users(email);
+
+-- Create Partial Index
+CREATE INDEX idx_active_users ON users(name) WHERE active = true;
+
+-- Create Expression Index
+CREATE INDEX idx_lower_email ON users(LOWER(email));
+
+-- Create GIN Index for JSON/Array
+CREATE INDEX idx_properties ON products USING GIN (properties);
+
+-- Create GIST Index for full-text search
+CREATE INDEX idx_search ON documents USING GIST (content);
+
+-- Drop Index
+DROP INDEX idx_lastname;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">PostgreSQL Performance Optimization</h4>
+                <div class="sql-command">
+                    <pre><code>-- Analyze Query Performance
+EXPLAIN SELECT * FROM users WHERE email = 'john@example.com';
+EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'john@example.com';
+
+-- Show Table Statistics
+ANALYZE table_name;
+
+-- View Indexes
+SELECT * FROM pg_indexes WHERE tablename = 'users';
+
+-- Update Statistics
+ANALYZE;</code></pre>
+                </div>
+                
+                <div class="info">
+                    <p><strong>Performance Tips:</strong></p>
+                    <ul>
+                        <li>Use GIN indexes for JSON and array columns</li>
+                        <li>Implement partial indexes for frequently filtered data</li>
+                        <li>Use EXPLAIN ANALYZE to understand query performance</li>
+                        <li>Consider partitioning for very large tables</li>
+                        <li>Regularly update table statistics with ANALYZE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">PostgreSQL Stored Procedures and Functions</h3>
+                
+                <h4>Creating Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create a function using PL/pgSQL
+CREATE OR REPLACE FUNCTION calculate_age(birth_date DATE)
+RETURNS INTEGER AS $$
+BEGIN
+    RETURN EXTRACT(YEAR FROM AGE(birth_date));
+END;
+$$ LANGUAGE plpgsql;
+
+-- Use the function
+SELECT name, calculate_age(birth_date) AS age FROM users;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Creating Stored Procedures</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create a procedure (PostgreSQL 11+)
+CREATE PROCEDURE update_user_email(
+    IN user_id INTEGER,
+    IN new_email VARCHAR
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE users 
+    SET email = new_email, updated_at = CURRENT_TIMESTAMP
+    WHERE id = user_id;
+    COMMIT;
+END;
+$$;
+
+-- Call the procedure
+CALL update_user_email(1, 'newemail@example.com');</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Common Table Expressions (CTEs) and Recursive Queries</h4>
+                <div class="sql-command">
+                    <pre><code>-- Simple CTE
+WITH top_products AS (
+    SELECT * FROM products 
+    WHERE price > 100
+    ORDER BY price DESC
+    LIMIT 10
+)
+SELECT * FROM top_products;
+
+-- Recursive CTE to generate series
+WITH RECURSIVE numbers AS (
+    SELECT 1 AS n
+    UNION ALL
+    SELECT n + 1
+    FROM numbers
+    WHERE n < 10
+)
+SELECT * FROM numbers;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

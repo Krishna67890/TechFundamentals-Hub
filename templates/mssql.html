@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block title %}Microsoft SQL Server - Learn MS SQL{% endblock %}
+
+{% block content %}
+<div class="page-header text-center">
+    <h1>Microsoft SQL Server</h1>
+    <p class="lead">Learn Microsoft SQL Server - enterprise-grade database solution</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Introduction to Microsoft SQL Server</h2>
+                <p class="card-text">
+                    Microsoft SQL Server is a relational database management system developed by Microsoft.
+                    It is designed for enterprise environments and offers advanced features for data management,
+                    business intelligence, and analytics.
+                </p>
+                
+                <div class="info">
+                    <p><strong>Key Features of SQL Server:</strong></p>
+                    <ul>
+                        <li>Enterprise-grade security and compliance</li>
+                        <li>Advanced analytics and machine learning integration</li>
+                        <li>High availability and disaster recovery options</li>
+                        <li>Business intelligence and reporting tools</li>
+                        <li>Columnstore indexes for data warehousing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">SQL Server Installation and Setup</h3>
+                
+                <h4>Installation Notes</h4>
+                <div class="sql-command">
+                    <pre><code>-- SQL Server Installation
+-- 1. Download SQL Server from Microsoft website
+-- 2. Run the installation wizard
+-- 3. Choose edition (Express, Standard, Enterprise)
+-- 4. Configure security settings
+-- 5. Complete installation
+
+-- Connect using SQL Server Management Studio (SSMS)
+-- Or connect using command line tools like sqlcmd</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Connecting to SQL Server</h4>
+                <div class="sql-command">
+                    <pre><code>-- Using sqlcmd
+sqlcmd -S server_name -U username -P password
+
+-- Connection string example
+Server=server_name;Database=database_name;User Id=username;Password=password;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">SQL Server Specific Commands</h3>
+                
+                <h4>Database Operations</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Database
+CREATE DATABASE database_name;
+
+-- Use Database
+USE database_name;
+
+-- Show Databases
+SELECT name FROM sys.databases;
+
+-- Drop Database
+DROP DATABASE database_name;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Table Operations</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Table
+CREATE TABLE table_name (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    name NVARCHAR(255) NOT NULL,
+    email NVARCHAR(255) UNIQUE,
+    created_at DATETIME2 DEFAULT GETDATE()
+);
+
+-- Show Tables
+SELECT TABLE_NAME 
+FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_TYPE = 'BASE TABLE';
+
+-- Describe Table
+EXEC sp_columns table_name;
+
+-- Drop Table
+DROP TABLE table_name;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">SQL Server Data Types</h4>
+                <div class="sql-command">
+                    <pre><code>-- Numeric Types
+INT, TINYINT, SMALLINT, BIGINT
+DECIMAL(p,s), NUMERIC(p,s), FLOAT, REAL, MONEY
+
+-- Date and Time Types
+DATE, TIME, DATETIME2, DATETIME, SMALLDATETIME, DATETIMEOFFSET
+
+-- String Types
+CHAR(n), VARCHAR(n), TEXT
+NCHAR(n), NVARCHAR(n), NTEXT (Unicode support)
+
+-- Binary Types
+BINARY(n), VARBINARY(n), IMAGE</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">SQL Server Functions and Features</h3>
+                
+                <h4>String Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Common String Functions
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM users;
+SELECT UPPER(name) FROM products;
+SELECT LOWER(name) FROM products;
+SELECT LEN(name) FROM products; -- Note: LEN instead of LENGTH
+SELECT SUBSTRING(name, 1, 5) FROM products;
+SELECT REPLACE(name, 'old', 'new') FROM products;
+SELECT REVERSE(name) FROM products;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Date and Time Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Common Date Functions
+SELECT GETDATE(); -- Current date and time
+SELECT GETUTCDATE(); -- Current UTC date and time
+SELECT SYSDATETIME(); -- Current date and time with more precision
+SELECT FORMAT(GETDATE(), 'yyyy-MM-dd HH:mm:ss'); -- Formatted date
+SELECT DATEDIFF(day, '2023-01-01', '2023-12-31'); -- Difference in days
+SELECT DATEADD(month, 1, GETDATE()); -- Add 1 month</code></pre>
+                </div>
+                
+                <h4 class="mt-3">SQL Server Specific Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- SQL Server Specific Functions
+SELECT NEWID(); -- Generate unique identifier (GUID)
+SELECT CASE WHEN condition THEN result1 ELSE result2 END;
+SELECT ISNULL(value, replacement); -- Check for NULL values
+SELECT COALESCE(value1, value2, value3); -- Returns first non-null value
+SELECT IIF(condition, value_if_true, value_if_false); -- SQL Server 2012+
+SELECT FORMAT(value, 'format_string'); -- Format values</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">SQL Server Indexes and Performance</h3>
+                
+                <h4>Creating Indexes</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create Index
+CREATE INDEX IX_lastname ON users(last_name);
+
+-- Create Unique Index
+CREATE UNIQUE INDEX IX_email ON users(email);
+
+-- Create Clustered Index (only one per table)
+CREATE CLUSTERED INDEX IX_user_id ON users(user_id);
+
+-- Create Non-Clustered Index
+CREATE NONCLUSTERED INDEX IX_name_age ON users(first_name, last_name, age);
+
+-- Drop Index
+DROP INDEX users.IX_lastname;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">SQL Server Performance Optimization</h4>
+                <div class="sql-command">
+                    <pre><code>-- Analyze Query Performance
+SET STATISTICS IO ON;
+SET STATISTICS TIME ON;
+SELECT * FROM users WHERE email = 'john@example.com';
+
+-- Show Execution Plan
+SET SHOWPLAN_ALL ON;
+SELECT * FROM users WHERE email = 'john@example.com';
+
+-- View Indexes
+SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID('users');
+
+-- Update Statistics
+UPDATE STATISTICS table_name;</code></pre>
+                </div>
+                
+                <div class="info">
+                    <p><strong>Performance Tips:</strong></p>
+                    <ul>
+                        <li>Use columnstore indexes for data warehousing scenarios</li>
+                        <li>Implement proper partitioning for large tables</li>
+                        <li>Use query hints judiciously for performance tuning</li>
+                        <li>Monitor query execution plans regularly</li>
+                        <li>Implement proper indexing strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">SQL Server Stored Procedures and Functions</h3>
+                
+                <h4>Creating Stored Procedures</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create a stored procedure
+CREATE PROCEDURE GetUsersByCity
+    @city_name NVARCHAR(255)
+AS
+BEGIN
+    SELECT * FROM users WHERE city = @city_name;
+END;
+
+-- Execute the procedure
+EXEC GetUsersByCity 'New York';
+-- Or
+EXECUTE GetUsersByCity @city_name = 'New York';</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Creating Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create a scalar function
+CREATE FUNCTION CalculateAge(@birth_date DATE)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @age INT;
+    SET @age = DATEDIFF(YEAR, @birth_date, GETDATE());
+    RETURN @age;
+END;
+
+-- Use the function
+SELECT name, dbo.CalculateAge(birth_date) AS age FROM users;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Common Table Expressions (CTEs)</h4>
+                <div class="sql-command">
+                    <pre><code>-- Simple CTE
+WITH EmployeeCTE AS (
+    SELECT EmployeeID, FirstName, LastName, DepartmentID
+    FROM Employees
+    WHERE DepartmentID = 1
+)
+SELECT * FROM EmployeeCTE;
+
+-- Recursive CTE
+WITH Numbers AS (
+    SELECT 1 AS n
+    UNION ALL
+    SELECT n + 1
+    FROM Numbers
+    WHERE n < 10
+)
+SELECT * FROM Numbers;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

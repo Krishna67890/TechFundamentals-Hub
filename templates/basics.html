@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}SQL Basics - Learn SQL Fundamentals{% endblock %}
+
+{% block content %}
+<div class="page-header text-center">
+    <h1>SQL Basics</h1>
+    <p class="lead">Learn fundamental SQL concepts that apply to all database systems</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Introduction to SQL</h2>
+                <p class="card-text">
+                    SQL (Structured Query Language) is a standard language for accessing and manipulating databases.
+                    It allows you to perform various operations like retrieving data, inserting records, updating records, and deleting records.
+                </p>
+                
+                <div class="info">
+                    <p><strong>Key Concepts:</strong></p>
+                    <ul>
+                        <li><strong>DDL</strong> (Data Definition Language): CREATE, ALTER, DROP</li>
+                        <li><strong>DML</strong> (Data Manipulation Language): SELECT, INSERT, UPDATE, DELETE</li>
+                        <li><strong>DCL</strong> (Data Control Language): GRANT, REVOKE</li>
+                        <li><strong>TCL</strong> (Transaction Control Language): COMMIT, ROLLBACK</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Basic SQL Commands</h3>
+                
+                <h4>SELECT Statement</h4>
+                <p>The SELECT statement is used to select data from a database.</p>
+                <div class="sql-command">
+                    <pre><code>SELECT column1, column2, ...
+FROM table_name;</code></pre>
+                </div>
+                
+                <div class="example">
+                    <p><strong>Example:</strong></p>
+                    <pre><code>SELECT FirstName, LastName
+FROM Employees;</code></pre>
+                </div>
+                
+                <h4 class="mt-4">WHERE Clause</h4>
+                <p>The WHERE clause is used to filter records.</p>
+                <div class="sql-command">
+                    <pre><code>SELECT column1, column2, ...
+FROM table_name
+WHERE condition;</code></pre>
+                </div>
+                
+                <div class="example">
+                    <p><strong>Example:</strong></p>
+                    <pre><code>SELECT * 
+FROM Customers
+WHERE Country='Mexico';</code></pre>
+                </div>
+                
+                <h4 class="mt-4">INSERT INTO Statement</h4>
+                <p>The INSERT INTO statement is used to insert new records in a table.</p>
+                <div class="sql-command">
+                    <pre><code>INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);</code></pre>
+                </div>
+                
+                <div class="example">
+                    <p><strong>Example:</strong></p>
+                    <pre><code>INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');</code></pre>
+                </div>
+                
+                <h4 class="mt-4">UPDATE Statement</h4>
+                <p>The UPDATE statement is used to modify the existing records in a table.</p>
+                <div class="sql-command">
+                    <pre><code>UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;</code></pre>
+                </div>
+                
+                <div class="example">
+                    <p><strong>Example:</strong></p>
+                    <pre><code>UPDATE Customers
+SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+WHERE CustomerID = 1;</code></pre>
+                </div>
+                
+                <h4 class="mt-4">DELETE Statement</h4>
+                <p>The DELETE statement is used to delete existing records in a table.</p>
+                <div class="sql-command">
+                    <pre><code>DELETE FROM table_name WHERE condition;</code></pre>
+                </div>
+                
+                <div class="example">
+                    <p><strong>Example:</strong></p>
+                    <pre><code>DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Common SQL Functions</h3>
+                
+                <h4>Aggregate Functions</h4>
+                <ul>
+                    <li><strong>COUNT()</strong> - Returns the number of rows</li>
+                    <li><strong>SUM()</strong> - Returns the sum of a numeric column</li>
+                    <li><strong>AVG()</strong> - Returns the average value</li>
+                    <li><strong>MAX()</strong> - Returns the largest value</li>
+                    <li><strong>MIN()</strong> - Returns the smallest value</li>
+                </ul>
+                
+                <div class="sql-command">
+                    <pre><code>SELECT COUNT(*), AVG(Price)
+FROM Products;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Common Functions</h4>
+                <ul>
+                    <li><strong>UPPER()</strong> - Converts a string to upper case</li>
+                    <li><strong>LOWER()</strong> - Converts a string to lower case</li>
+                    <li><strong>LEN()</strong> - Returns the length of a string</li>
+                    <li><strong>ROUND()</strong> - Rounds a numeric field to the specified number of decimals</li>
+                </ul>
+                
+                <div class="sql-command">
+                    <pre><code>SELECT ProductName, UPPER(Category)
+FROM Products;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">JOIN Operations</h3>
+                
+                <p>JOINs are used to combine rows from two or more tables, based on a related column between them.</p>
+                
+                <h4>INNER JOIN</h4>
+                <p>Returns records that have matching values in both tables.</p>
+                <div class="sql-command">
+                    <pre><code>SELECT Orders.OrderID, Customers.CustomerName
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">LEFT JOIN</h4>
+                <p>Returns all records from the left table, and the matched records from the right table.</p>
+                <div class="sql-command">
+                    <pre><code>SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">RIGHT JOIN</h4>
+                <p>Returns all records from the right table, and the matched records from the left table.</p>
+                <div class="sql-command">
+                    <pre><code>SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+RIGHT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">FULL OUTER JOIN</h4>
+                <p>Returns all records when there is a match in either left or right table records.</p>
+                <div class="sql-command">
+                    <pre><code>SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

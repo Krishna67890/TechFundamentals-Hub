@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}Advanced SQL - Master Complex Queries{% endblock %}
+
+{% block content %}
+<div class="page-header text-center">
+    <h1>Advanced SQL Concepts</h1>
+    <p class="lead">Master complex queries, optimization techniques, and advanced database concepts</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Advanced Query Techniques</h2>
+                <p class="card-text">
+                    Advanced SQL involves complex queries that go beyond basic SELECT, INSERT, UPDATE, and DELETE statements.
+                    These techniques allow for sophisticated data analysis and manipulation.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Subqueries and Nested Queries</h3>
+                
+                <h4>Subqueries in WHERE Clause</h4>
+                <div class="sql-command">
+                    <pre><code>-- Find employees who earn more than the average salary
+SELECT employee_name, salary
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+
+-- Find customers who have placed orders
+SELECT customer_name
+FROM customers
+WHERE customer_id IN (
+    SELECT DISTINCT customer_id
+    FROM orders
+);</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Subqueries in FROM Clause (Derived Tables)</h4>
+                <div class="sql-command">
+                    <pre><code>-- Calculate department averages and compare to company average
+SELECT dept_avg.dept_name, dept_avg.avg_salary
+FROM (
+    SELECT department, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department
+) AS dept_avg
+WHERE dept_avg.avg_salary > (
+    SELECT AVG(salary) FROM employees
+);</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Correlated Subqueries</h4>
+                <div class="sql-command">
+                    <pre><code>-- Find employees who earn more than the average in their department
+SELECT e1.employee_name, e1.salary, e1.department
+FROM employees e1
+WHERE e1.salary > (
+    SELECT AVG(e2.salary)
+    FROM employees e2
+    WHERE e2.department = e1.department
+);</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Window Functions</h3>
+                
+                <h4>Ranking Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Rank employees by salary within each department
+SELECT 
+    employee_name,
+    department,
+    salary,
+    ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS row_num,
+    RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rank,
+    DENSE_RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS dense_rank
+FROM employees;
+
+-- Calculate running totals
+SELECT 
+    order_date,
+    order_amount,
+    SUM(order_amount) OVER (ORDER BY order_date) AS running_total
+FROM orders;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Analytical Functions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Calculate moving averages
+SELECT 
+    date,
+    sales,
+    AVG(sales) OVER (
+        ORDER BY date 
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ) AS moving_avg_3_days
+FROM daily_sales;
+
+-- Lead and Lag functions
+SELECT 
+    product_name,
+    price,
+    LAG(price) OVER (ORDER BY date) AS prev_price,
+    LEAD(price) OVER (ORDER BY date) AS next_price,
+    price - LAG(price) OVER (ORDER BY date) AS price_change
+FROM products;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Common Table Expressions (CTEs)</h3>
+                
+                <h4>Simple CTEs</h4>
+                <div class="sql-command">
+                    <pre><code>-- Define a CTE for complex calculations
+WITH department_stats AS (
+    SELECT 
+        department,
+        AVG(salary) AS avg_salary,
+        MAX(salary) AS max_salary,
+        MIN(salary) AS min_salary
+    FROM employees
+    GROUP BY department
+)
+SELECT 
+    e.employee_name,
+    e.salary,
+    ds.avg_salary,
+    (e.salary - ds.avg_salary) AS diff_from_avg
+FROM employees e
+JOIN department_stats ds ON e.department = ds.department;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Recursive CTEs</h4>
+                <div class="sql-command">
+                    <pre><code>-- Generate a series of numbers
+WITH RECURSIVE number_series AS (
+    SELECT 1 AS n
+    UNION ALL
+    SELECT n + 1
+    FROM number_series
+    WHERE n < 10
+)
+SELECT * FROM number_series;
+
+-- Hierarchical data (organizational chart)
+WITH RECURSIVE org_chart AS (
+    -- Base case: top-level managers
+    SELECT employee_id, employee_name, manager_id, 0 AS level
+    FROM employees
+    WHERE manager_id IS NULL
+    
+    UNION ALL
+    
+    -- Recursive case: subordinates
+    SELECT e.employee_id, e.employee_name, e.manager_id, oc.level + 1
+    FROM employees e
+    JOIN org_chart oc ON e.manager_id = oc.employee_id
+)
+SELECT * FROM org_chart
+ORDER BY level, employee_name;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Advanced JOIN Operations</h3>
+                
+                <h4>CROSS JOIN</h4>
+                <div class="sql-command">
+                    <pre><code>-- Generate all possible combinations
+SELECT 
+    c.customer_name,
+    p.product_name
+FROM customers c
+CROSS JOIN products p;
+
+-- Calendar generation
+WITH RECURSIVE date_range AS (
+    SELECT '2023-01-01'::date AS date_val
+    UNION ALL
+    SELECT date_val + INTERVAL '1 day'
+    FROM date_range
+    WHERE date_val < '2023-01-31'
+)
+SELECT 
+    dr.date_val,
+    s.store_name
+FROM date_range dr
+CROSS JOIN stores s;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Self JOIN</h4>
+                <div class="sql-command">
+                    <pre><code>-- Find employees and their managers
+SELECT 
+    e.employee_name AS employee,
+    m.employee_name AS manager
+FROM employees e
+JOIN employees m ON e.manager_id = m.employee_id;
+
+-- Find employees in the same department
+SELECT 
+    e1.employee_name AS emp1,
+    e2.employee_name AS emp2,
+    e1.department
+FROM employees e1
+JOIN employees e2 ON e1.department = e2.department
+WHERE e1.employee_id < e2.employee_id;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Complex JOIN with Multiple Conditions</h4>
+                <div class="sql-command">
+                    <pre><code>-- Multiple join conditions
+SELECT 
+    c.customer_name,
+    o.order_date,
+    p.product_name,
+    oi.quantity
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN products p ON oi.product_id = p.product_id
+WHERE o.order_date >= '2023-01-01'
+    AND p.category = 'Electronics';</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Performance Optimization</h3>
+                
+                <h4>Query Optimization Techniques</h4>
+                <div class="sql-command">
+                    <pre><code>-- Use EXISTS instead of IN for subqueries
+-- Instead of:
+SELECT * FROM customers 
+WHERE customer_id IN (SELECT customer_id FROM orders);
+
+-- Use:
+SELECT * FROM customers 
+WHERE EXISTS (SELECT 1 FROM orders WHERE orders.customer_id = customers.customer_id);
+
+-- Use UNION ALL instead of UNION when duplicates are acceptable
+SELECT customer_id FROM active_customers
+UNION ALL
+SELECT customer_id FROM archived_customers;
+
+-- Limit result sets when possible
+SELECT * FROM large_table
+ORDER BY date_created DESC
+LIMIT 100;</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Indexing Strategies</h4>
+                <div class="sql-command">
+                    <pre><code>-- Create composite indexes for multi-column queries
+CREATE INDEX idx_customer_date_status 
+ON orders (customer_id, order_date, status);
+
+-- Covering index to avoid table lookups
+CREATE INDEX idx_covering 
+ON orders (customer_id, order_date) 
+INCLUDE (total_amount, status);
+
+-- Partial index for frequently filtered data
+CREATE INDEX idx_active_customers 
+ON customers (last_login_date) 
+WHERE status = 'active';</code></pre>
+                </div>
+                
+                <div class="info">
+                    <p><strong>Performance Best Practices:</strong></p>
+                    <ul>
+                        <li>Avoid SELECT * - specify only needed columns</li>
+                        <li>Use parameterized queries to prevent SQL injection</li>
+                        <li>Consider partitioning for very large tables</li>
+                        <li>Regularly update table statistics</li>
+                        <li>Use query execution plans to identify bottlenecks</li>
+                        <li>Implement proper indexing strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Advanced Data Manipulation</h3>
+                
+                <h4>UPSERT Operations (INSERT ... ON CONFLICT)</h4>
+                <div class="sql-command">
+                    <pre><code>-- PostgreSQL UPSERT
+INSERT INTO users (id, name, email)
+VALUES (1, 'John Doe', 'john@example.com')
+ON CONFLICT (id) 
+DO UPDATE SET 
+    name = EXCLUDED.name,
+    email = EXCLUDED.email;
+
+-- MySQL INSERT ... ON DUPLICATE KEY UPDATE
+INSERT INTO users (id, name, email)
+VALUES (1, 'John Doe', 'john@example.com')
+ON DUPLICATE KEY UPDATE
+    name = VALUES(name),
+    email = VALUES(email);
+
+-- SQL Server MERGE
+MERGE users AS target
+USING (VALUES (1, 'John Doe', 'john@example.com')) AS source (id, name, email)
+ON target.id = source.id
+WHEN MATCHED THEN
+    UPDATE SET name = source.name, email = source.email
+WHEN NOT MATCHED THEN
+    INSERT (id, name, email) VALUES (source.id, source.name, source.email);</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Complex Updates and Deletes</h4>
+                <div class="sql-command">
+                    <pre><code>-- Update with JOIN
+UPDATE employees e
+SET salary = salary * 1.10
+FROM departments d
+WHERE e.department_id = d.department_id
+    AND d.budget > 1000000;
+
+-- Delete with subquery
+DELETE FROM orders
+WHERE customer_id IN (
+    SELECT customer_id
+    FROM customers
+    WHERE status = 'inactive'
+    AND last_order_date < '2022-01-01'
+);</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Database Design Patterns</h3>
+                
+                <h4>Slowly Changing Dimensions (SCD)</h4>
+                <div class="sql-command">
+                    <pre><code>-- Type 2 SCD - Keep historical records
+CREATE TABLE customer_scd (
+    customer_id INT,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    valid_from DATE,
+    valid_to DATE,
+    is_current BOOLEAN
+);
+
+-- When updating, insert new record and expire old one
+UPDATE customer_scd 
+SET valid_to = CURRENT_DATE - 1, is_current = FALSE
+WHERE customer_id = 1 AND is_current = TRUE;
+
+INSERT INTO customer_scd (customer_id, name, email, valid_from, valid_to, is_current)
+VALUES (1, 'New Name', 'newemail@example.com', CURRENT_DATE, NULL, TRUE);</code></pre>
+                </div>
+                
+                <h4 class="mt-3">Data Warehousing Patterns</h4>
+                <div class="sql-command">
+                    <pre><code>-- Star Schema: Fact and Dimension Tables
+-- Fact table
+CREATE TABLE sales_fact (
+    sale_id SERIAL PRIMARY KEY,
+    product_key INT,
+    customer_key INT,
+    date_key INT,
+    store_key INT,
+    quantity INT,
+    amount DECIMAL(10,2)
+);
+
+-- Dimension tables
+CREATE TABLE product_dim (
+    product_key SERIAL PRIMARY KEY,
+    product_name VARCHAR(255),
+    category VARCHAR(255),
+    brand VARCHAR(255)
+);
+
+-- Data aggregation query
+SELECT 
+    pd.category,
+    dd.year,
+    SUM(sf.amount) AS total_sales,
+    AVG(sf.amount) AS avg_sale
+FROM sales_fact sf
+JOIN product_dim pd ON sf.product_key = pd.product_key
+JOIN date_dim dd ON sf.date_key = dd.date_key
+GROUP BY pd.category, dd.year;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

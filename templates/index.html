@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}SQL Learning Center - Home{% endblock %}
+
+{% block content %}
+<div class="page-header text-center">
+    <h1>SQL Learning Center</h1>
+    <p class="lead">Master SQL with our comprehensive guide covering MySQL, Microsoft SQL Server, and PostgreSQL</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Welcome to SQL Learning Center</h2>
+                <p class="card-text">
+                    This website provides comprehensive tutorials and examples for SQL databases including MySQL, Microsoft SQL Server, and PostgreSQL.
+                    Whether you're a beginner learning SQL basics or an advanced user looking for complex query examples, 
+                    you'll find everything you need here.
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">MySQL</h5>
+                                <p class="card-text">The world's most popular open-source database</p>
+                                <a href="/mysql" class="btn btn-primary">Learn MySQL</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Microsoft SQL Server</h5>
+                                <p class="card-text">Enterprise-grade database solution by Microsoft</p>
+                                <a href="/mssql" class="btn btn-primary">Learn MS SQL</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">PostgreSQL</h5>
+                                <p class="card-text">The most advanced open-source database</p>
+                                <a href="/postgresql" class="btn btn-primary">Learn PostgreSQL</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">SQL Basics</h3>
+                <p class="card-text">Start with fundamental SQL concepts and commands that apply to all database systems.</p>
+                <a href="/basics" class="btn btn-outline-primary">Start Learning Basics</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Advanced SQL</h3>
+                <p class="card-text">Explore complex queries, stored procedures, and advanced database concepts.</p>
+                <a href="/advanced" class="btn btn-outline-primary">Explore Advanced Topics</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">What You'll Learn</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">SELECT statements</li>
+                            <li class="list-group-item">JOIN operations</li>
+                            <li class="list-group-item">Data manipulation</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Database design</li>
+                            <li class="list-group-item">Performance optimization</li>
+                            <li class="list-group-item">Stored procedures</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Triggers and functions</li>
+                            <li class="list-group-item">Security best practices</li>
+                            <li class="list-group-item">Advanced analytics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
