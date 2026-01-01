@@ -20,5 +20,11 @@
   },
   "env": {
     "CI": "false"
+  },
+  "build": {
+    "env": {
+      "SKIP_PREFLIGHT_CHECK": "true",
+      "GENERATE_SOURCEMAP": "false"
+    }
   }
 }
