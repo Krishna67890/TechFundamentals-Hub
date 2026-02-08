@@ -86,7 +86,6 @@ const AdvancedQuiz = ({ quizData }) => {
     }));
     
     // Provide immediate visual feedback
-    console.log(`Selected answer ${optionIndex} for question ${questionIdKey}`);
   }, [setSelectedAnswers]);
 
   const toggleBookmark = useCallback((questionId) => {

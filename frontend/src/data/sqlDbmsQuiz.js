@@ -714,8 +714,5 @@ export const fullSqlDbmsQuiz = {
       correctAnswer: 1,
       explanation: "The main advantage of the relational model is data independence and conceptual simplicity."
     }
-  ],
-  onComplete: (results) => {
-    console.log('SQL/DBMS quiz completed with results:', results);
-  }
+  ]
 };

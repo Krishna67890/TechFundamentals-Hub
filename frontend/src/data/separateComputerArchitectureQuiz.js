@@ -712,8 +712,5 @@ export const separateComputerArchitectureQuiz = {
       correctAnswer: 1,
       explanation: "Plug-and-play systems automatically configure hardware without manual intervention"
     }
-  ],
-  onComplete: (results) => {
-    console.log('Computer Architecture quiz completed with results:', results);
-  }
+  ]
 };

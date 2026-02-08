@@ -714,8 +714,5 @@ export const fullComputerArchitectureQuiz = {
       correctAnswer: 2,
       explanation: "Modern computer architecture focuses on best performance per watt for efficiency"
     }
-  ],
-  onComplete: (results) => {
-    console.log('Computer Architecture quiz completed with results:', results);
-  }
+  ]
 };

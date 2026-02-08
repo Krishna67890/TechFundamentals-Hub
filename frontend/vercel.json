@@ -1,30 +1,3 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
-  "github": {
-    "silent": true
-  },
-  "env": {
-    "CI": "false"
-  },
-  "build": {
-    "env": {
-      "SKIP_PREFLIGHT_CHECK": "true",
-      "GENERATE_SOURCEMAP": "false"
-    }
-  }
+  "framework": "create-react-app"
 }

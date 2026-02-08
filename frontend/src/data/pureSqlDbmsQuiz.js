@@ -712,8 +712,5 @@ export const pureSqlDbmsQuiz = {
       correctAnswer: 0,
       explanation: "TRIM() function removes leading and trailing spaces from string values."
     }
-  ],
-  onComplete: (results) => {
-    console.log('Pure SQL/DBMS quiz completed with results:', results);
-  }
+  ]
 };

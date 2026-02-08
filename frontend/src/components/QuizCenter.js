@@ -88,12 +88,6 @@ const QuizCenter = () => {
     }
     
     const handleQuizComplete = (results) => {
-      console.log('Quiz completed with results:', results);
-      
-      // Enhanced result logging
-      console.log(`Score: ${results.score}%`);
-      console.log(`Correct Answers: ${results.correctAnswers}/${results.totalQuestions}`);
-      console.log(`Selected Answers:`, results.answers);
       
       // Save results to localStorage
       if (quizData && quizData.topicId) {
