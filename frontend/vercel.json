@@ -11,12 +11,18 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "index.html"
+      "dest": "/index.html"
     }
   ],
-  "env": {
-    "NODE_OPTIONS": "--max_old_space_size=4096",
-    "GENERATE_SOURCEMAP": "false",
-    "SKIP_PREFLIGHT_CHECK": "true"
-  }
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0"
+        }
+      ]
+    }
+  ]
 }
