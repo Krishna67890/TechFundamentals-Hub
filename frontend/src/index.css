@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS variables for consistent theming */
+:root {
+  --primary-blue: #2563eb;
+  --primary-green: #10b981;
+  --dark-bg: #1a1a1a;
+  --card-dark: #2d2d2d;
+  --card-light: #ffffff;
+  --text-dark: #1f2937;
+  --text-light: #f9fafb;
+}
+
+/* Custom component styles */
+@layer components {
+  .btn-primary {
+    @apply bg-primary-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+  }
+  
+  .btn-secondary {
+    @apply bg-primary-green hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-1;
+  }
+  
+  .progress-bar {
+    @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+  }
+  
+  .progress-fill {
+    @apply h-full bg-gradient-to-r from-primary-blue to-primary-green rounded-full transition-all duration-500 ease-out;
+  }
+  
+  .module-card {
+    @apply bg-white dark:bg-card-dark rounded-xl shadow-lg p-6 card-hover border border-gray-100 dark:border-gray-700;
+  }
+  
+  .code-block {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-lg font-mono text-sm overflow-x-auto;
+  }
+  
+  .theme-toggle {
+    @apply w-12 h-6 bg-gray-300 dark:bg-gray-600 rounded-full relative cursor-pointer transition-colors duration-300;
+  }
+  
+  .theme-toggle::after {
+    @apply content-[''] absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform duration-300;
+  }
+  
+  .theme-toggle.dark::after {
+    @apply transform translate-x-6;
+  }
+}
+
+/* Dark mode specific styles */
+.dark {
+  background-color: var(--dark-bg);
+  color: var(--text-light);
+}
+
+/* Light mode specific styles */
+.light {
+  background-color: var(--card-light);
+  color: var(--text-dark);
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .hero-text {
+    font-size: 2.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Loading skeleton styles */
+.skeleton {
+  @apply bg-gray-200 dark:bg-gray-700 rounded animate-pulse;
+}
+
+/* Quiz feedback animations */
+.feedback-correct {
+  @apply bg-green-100 dark:bg-green-900 border-green-500 text-green-700 dark:text-green-300;
+}
+
+.feedback-incorrect {
+  @apply bg-red-100 dark:bg-red-900 border-red-500 text-red-700 dark:text-red-300;
+}
